@@ -3,7 +3,6 @@ package com.email.email_writer_sb;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -14,18 +13,22 @@ public class EmailGeneratorService {
 
     public final WebClient webClient;
 
-    @Value("${gemini.api.url}")
-    private String geminiApiUrl;
+//    @Value("${gemini.api.url}")
+//    private String geminiApiUrl;
+//
+//    @Value("${gemini.api.key}")
+//    private String geminiApiKey;
 
-    @Value("${gemini.api.key}")
-    private String geminiApiKey;
+
+    private String geminiApiUrl="https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=";
+
 
     public EmailGeneratorService(WebClient.Builder webClientBuilder) {
         this.webClient = webClientBuilder.build();
     }
 
-    public String generateEmailReply(EmailRequest emailRequest) {
-
+    public String generateEmailReply(EmailRequest emailRequest, String geminiApiKey) {
+        System.out.println("entering service and emailRequest is "+emailRequest);
         // Build the prompt
         String prompt = buildPrompt(emailRequest);
 

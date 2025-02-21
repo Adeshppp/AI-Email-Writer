@@ -25,7 +25,9 @@
             "matches": [ "*://mail.google.com/*" ]
         }
     ],
-    "action": {
-        "default_title": "Email Writer Assistant"
-    }
+   "action": {
+    "default_popup": "popup.html",
+    "default_title": "Email Writer Assistant"
+}
+
 }
