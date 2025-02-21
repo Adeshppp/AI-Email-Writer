@@ -45,12 +45,13 @@ function injectButton() {
     const button = createAIButton();
     button.classList.add('ai-reply-button');
 
+
     button.addEventListener("click", async () => {
         try {
             button.innerHTML = "Generating...";
             button.disabled = true;
             const emailContent = getEmailContent();
-
+    
             // Retrieve API key from storage
             chrome.storage.sync.get("apiKey", async function (data) {
                 if (!data.apiKey) {
@@ -59,10 +60,9 @@ function injectButton() {
                     button.disabled = false;
                     return;
                 }
-
+    
                 console.log("Retrieved API Key:", data.apiKey); // Print API Key
-
-
+    
                 const response = await fetch("http://localhost:8080/api/email/generate", {
                     method: "POST",
                     headers: {
@@ -74,11 +74,11 @@ function injectButton() {
                         tone: "professional"
                     }),
                 });
-
+    
                 if (!response.ok) {
                     throw new Error("API Request Failed.");
                 }
-
+    
                 const generatedReply = await response.text();
                 const composeBox = document.querySelector('[role="textbox"][g_editable="true"]');
                 if (composeBox) {
@@ -96,7 +96,7 @@ function injectButton() {
             button.disabled = false;
         }
     });
-
+    
     toolbar.insertBefore(button, toolbar.firstChild);
 }
 
